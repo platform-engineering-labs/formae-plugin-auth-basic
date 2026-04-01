@@ -1,0 +1,10 @@
+bin/
+dist/
+vendor/
+.idea/
+.vscode/
+coverage.*
+.pkl-cache/
+CLAUDE.md
+.claude/
+.handoffs/

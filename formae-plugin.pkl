@@ -1,0 +1,5 @@
+name = "auth-basic"
+type = "auth"
+version = "0.1.0"
+license = "FSL-1.1-ALv2"
+minFormaeVersion = "0.83.0"
