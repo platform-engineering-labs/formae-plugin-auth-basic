@@ -18,9 +18,10 @@ lint:
 
 install: build
 	@echo "Installing $(PLUGIN_NAME) v$(PLUGIN_VERSION) to $(INSTALL_DIR)"
-	@mkdir -p $(INSTALL_DIR)
+	@mkdir -p $(INSTALL_DIR)/schema/pkl
 	cp bin/$(PLUGIN_NAME) $(INSTALL_DIR)/$(PLUGIN_NAME)
 	cp formae-plugin.pkl $(INSTALL_DIR)/formae-plugin.pkl
+	cp schema/pkl/Config.pkl $(INSTALL_DIR)/schema/pkl/Config.pkl
 
 clean:
 	rm -rf bin/ dist/

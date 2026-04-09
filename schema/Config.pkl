@@ -1,0 +1,25 @@
+/*
+ * © 2025 Platform Engineering Labs Inc.
+ *
+ * SPDX-License-Identifier: FSL-1.1-ALv2
+ */
+
+/// Auth-basic plugin configuration.
+/// Provides HTTP Basic Authentication for formae agent and CLI.
+extends "formae:/Config.pkl"
+
+class AuthorizedUser {
+    username: String
+    password: String
+}
+
+class AgentConfig extends BaseAgentAuthConfig {
+    type = "auth-basic"
+    authorizedUsers: Listing<AuthorizedUser>
+}
+
+class CliConfig extends BaseCliAuthConfig {
+    type = "auth-basic"
+    username: String
+    password: String
+}
