@@ -6,6 +6,8 @@
 
 /// Auth-basic plugin configuration.
 /// Provides HTTP Basic Authentication for formae agent and CLI.
+open module authBasic.Config
+
 extends "formae:/Config.pkl"
 
 class AuthorizedUser {
