@@ -1,2 +1,4 @@
+github.com/platform-engineering-labs/formae/pkg/auth v0.2.1 h1:YwlJCilmfygASMlZrNkTJ683gmzOt3JtBHI7NRsanhY=
+github.com/platform-engineering-labs/formae/pkg/auth v0.2.1/go.mod h1:XtLkQK8xVqhoiT4OauHPL/IRDuOM19CIOHWfRnD5UV8=
 golang.org/x/crypto v0.47.0 h1:V6e3FRj+n4dbpw86FJ8Fv7XVOql7TEwpHapKoMJ/GO8=
 golang.org/x/crypto v0.47.0/go.mod h1:ff3Y9VzzKbwSSEzWqJsJVBnWmRwRSHt/6Op5n9bQc4A=
