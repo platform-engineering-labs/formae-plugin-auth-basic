@@ -1,5 +1,7 @@
 name = "auth-basic"
 type = "auth"
 version = "0.1.0"
+summary = "HTTP Basic Authentication for the formae agent"
 license = "FSL-1.1-ALv2"
 minFormaeVersion = "0.84.0"
+category = "auth"
