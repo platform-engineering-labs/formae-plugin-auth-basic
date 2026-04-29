@@ -5,6 +5,7 @@ INSTALL_DIR := $(HOME)/.pel/formae/plugins/$(PLUGIN_NAME)/v$(PLUGIN_VERSION)
 .PHONY: build test test-unit lint install clean
 
 build:
+	@mkdir -p schema/pkl && echo "$(PLUGIN_VERSION)" > schema/pkl/VERSION
 	@mkdir -p bin
 	go build -o bin/$(PLUGIN_NAME) .
 
