@@ -6,14 +6,6 @@ HTTP Basic Authentication plugin for [formae](https://github.com/platform-engine
 
 This plugin provides HTTP Basic Authentication for the formae agent API. It runs as an external binary process, communicating with the agent and CLI via `net/rpc` over stdin/stdout. The agent validates incoming requests against a list of authorized users with bcrypt-hashed passwords. The CLI attaches credentials to outgoing requests.
 
-## Installation
-
-```bash
-make install
-```
-
-This builds the binary and installs it to `~/.pel/formae/plugins/auth-basic/v0.1.0/`.
-
 ## Configuration
 
 Authentication is configured separately for the agent and CLI in your `formae.conf.pkl`:
