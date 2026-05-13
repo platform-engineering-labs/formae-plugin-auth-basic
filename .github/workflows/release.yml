@@ -1,0 +1,47 @@
+# © 2026 Platform Engineering Labs Inc.
+# SPDX-License-Identifier: FSL-1.1-ALv2
+
+# Auth-plugin release pipeline. The Hub doesn't yet support
+# registering auth plugins (parser requires a `namespace` that auth
+# plugins don't conceptually have), so this repo dispatches
+# formae-actions' plugin-build workflow directly on every numeric tag
+# push with `kind=auth`. The workflow runs the same build matrix as a
+# regular plugin and publishes to the orbital index; only the
+# Hub-drift verification step is skipped (no Hub row exists to drift
+# against).
+#
+# When Hub gains auth-plugin support, retire this workflow and let the
+# Hub's webhook-driven dispatch path take over — same path as regular
+# plugins.
+
+name: release
+on:
+  push:
+    tags:
+      - '[0-9]*'
+
+jobs:
+  dispatch:
+    runs-on: ubuntu-latest
+    steps:
+      - env:
+          GH_TOKEN: ${{ secrets.HUB_DISPATCH_PAT }}
+        run: |
+          set -euo pipefail
+          TAG="${GITHUB_REF_NAME}"
+          VERSION="${TAG#v}"
+          BUILD_ID=$(uuidgen)
+          ATTEMPT_ID=$(uuidgen)
+          gh workflow run plugin-build.yml \
+            -R platform-engineering-labs/formae-actions \
+            --ref main \
+            -f plugin-name=auth-basic \
+            -f plugin-repo="$GITHUB_REPOSITORY" \
+            -f tag="$TAG" \
+            -f version="$VERSION" \
+            -f head-sha="$GITHUB_SHA" \
+            -f build-id="$BUILD_ID" \
+            -f attempt-id="$ATTEMPT_ID" \
+            -f kind=auth \
+            -f originator=platform.engineering \
+            -f channel=stable
