@@ -8,18 +8,22 @@ This plugin provides HTTP Basic Authentication for the formae agent API. It runs
 
 ## Configuration
 
-Authentication is configured separately for the agent and CLI in your `formae.conf.pkl`:
+Authentication is configured separately for the agent and CLI in your `formae.conf.pkl`,
+using the typed config classes the plugin exposes via `plugins:/AuthBasic.pkl`.
 
-**Agent** (server-side — validates incoming requests):
+**Agent** (server-side — validates incoming requests against bcrypt-hashed passwords):
 
 ```pkl
+amends "formae:/Config.pkl"
+
+import "plugins:/AuthBasic.pkl" as AuthBasic
+
 agent {
-    auth {
-        type = "auth-basic"
-        authorizedUsers = new Listing {
-            new Mapping {
-                ["Username"] = "admin"
-                ["Password"] = "<bcrypt hash>"
+    auth = new AuthBasic.AgentConfig {
+        authorizedUsers {
+            new AuthBasic.AuthorizedUser {
+                username = "admin"
+                password = "<bcrypt hash>"
             }
         }
     }
@@ -29,19 +33,24 @@ agent {
 **CLI** (client-side — sends credentials with requests):
 
 ```pkl
+amends "formae:/Config.pkl"
+
+import "plugins:/AuthBasic.pkl" as AuthBasic
+
 cli {
-    auth {
-        type = "auth-basic"
+    auth = new AuthBasic.CliConfig {
         username = "admin"
         password = "your-password"
     }
 }
 ```
 
-Generate a bcrypt hash:
+The agent stores a **bcrypt hash** of the password; the CLI sends the **plaintext**
+password. Generate the hash with `htpasswd` (the `$2y$` variant is compatible with the
+agent's bcrypt verifier):
 
 ```bash
-htpasswd -bnBC 10 "" your-password | tr -d ':\n'
+htpasswd -nbBC 10 "" your-password | cut -d: -f2
 ```
 
 ## License
